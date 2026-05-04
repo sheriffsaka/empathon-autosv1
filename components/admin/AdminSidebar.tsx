@@ -26,7 +26,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }
   return (
     <div className="w-64 bg-black border-r border-white/10 h-screen flex flex-col fixed left-0 top-0 z-50">
       <div className="p-6">
-        <Logo />
+        <Logo imgClassName="h-10" textClassName="text-xl" />
         <p className="text-xs text-slate-500 tracking-[0.2em] uppercase mt-2">Admin Panel</p>
       </div>
 

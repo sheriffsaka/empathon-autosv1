@@ -31,7 +31,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
       <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-xl shadow-2xl relative z-10 animate-in fade-in zoom-in duration-300">
         <div className="text-center mb-10">
            <div className="flex justify-center mb-8">
-              <Logo />
+              <Logo imgClassName="h-16" textClassName="text-2xl" />
            </div>
            <h2 className="text-3xl font-serif text-white mb-2">Admin Access</h2>
            <p className="text-slate-400 text-sm font-light">Enter your secure access credential.</p>
