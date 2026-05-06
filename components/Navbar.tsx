@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { NAV_ITEMS } from '../constants';
 import { Button } from './Button';
 import { ComponentVariant } from '../types';
@@ -8,6 +9,7 @@ import { Logo } from './Logo';
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   // Handle scroll effect for glass background intensity
   useEffect(() => {
@@ -18,51 +20,51 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  useEffect(() => {
     setIsMobileMenuOpen(false);
-  };
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
       <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-white/5 ${
           isScrolled || isMobileMenuOpen
-            ? 'bg-black/80 backdrop-blur-xl py-3 shadow-lg shadow-black/20' 
+            ? 'bg-black/95 backdrop-blur-xl py-3 shadow-lg shadow-black/20' 
             : 'bg-transparent backdrop-blur-sm py-5'
         }`}
       >
         <div className="max-w-[1920px] mx-auto px-6 md:px-12 flex items-center justify-between">
           
-          <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <Logo />
-          </div>
+          <Link to="/" className="transition-transform hover:scale-105 active:scale-95">
+            <Logo imgClassName="h-10 md:h-14" />
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-12">
             {NAV_ITEMS.map((item) => (
-              <a 
+              <Link 
                 key={item.label}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="relative group text-sm font-medium tracking-widest uppercase text-slate-300 hover:text-white transition-colors"
+                to={item.href}
+                className={`relative group text-xs font-bold tracking-[0.2em] uppercase transition-colors ${
+                  location.pathname === item.href ? 'text-white' : 'text-zinc-500 hover:text-white'
+                }`}
               >
                 {item.label}
-                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </a>
+                <span className={`absolute -bottom-2 left-0 h-[1px] bg-white transition-all duration-300 ${
+                  location.pathname === item.href ? 'w-full' : 'w-0 group-hover:w-full'
+                }`}></span>
+              </Link>
             ))}
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden lg:block">
-            <Button variant={ComponentVariant.GLASS} className="!py-2 !px-6 !text-xs !tracking-widest">
-              Client Login
-            </Button>
+            <Link to="/tracking">
+              <Button variant={ComponentVariant.GLASS} className="!py-2 !px-6 !text-[10px] !tracking-[0.2em] border-white/20 hover:border-white">
+                TRACK ORDER
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -85,20 +87,23 @@ export const Navbar: React.FC = () => {
       }`}>
         <div className="h-full flex flex-col justify-center items-center gap-8 p-8">
           {NAV_ITEMS.map((item, idx) => (
-            <a 
+            <Link 
               key={item.label}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="text-2xl font-serif text-white hover:text-slate-300 transition-colors transform translate-y-0"
+              to={item.href}
+              className={`text-4xl font-bold uppercase tracking-tighter transition-colors ${
+                location.pathname === item.href ? 'text-white' : 'text-zinc-700'
+              }`}
               style={{ transitionDelay: `${idx * 100}ms` }}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <div className="mt-8">
-            <Button variant={ComponentVariant.PRIMARY} onClick={() => setIsMobileMenuOpen(false)}>
-              Access Portal
-            </Button>
+            <Link to="/tracking">
+              <Button variant={ComponentVariant.PRIMARY} className="px-12 py-4">
+                TRACK ORDER
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

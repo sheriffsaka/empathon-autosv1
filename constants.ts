@@ -59,11 +59,11 @@ export const TYPOGRAPHY_SYSTEM: TypographySample[] = [
 ];
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'Showroom', href: '#showroom' },
-  { label: 'Corporate Fleet', href: '#corporate' },
-  { label: 'Private Collection', href: '#private' },
-  { label: 'Concierge', href: '#concierge' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Browse Cars', href: '/showroom' },
+  { label: 'Corporate', href: '/corporate' },
+  { label: 'Dealers', href: '/dealers' },
+  { label: 'Track Order', href: '/tracking' },
+  { label: 'Admin', href: '/admin' },
 ];
 
 export const HERO_SLIDES: HeroSlide[] = [

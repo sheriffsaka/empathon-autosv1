@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { GlassCard } from './GlassCard';
 import { Button } from './Button';
-import { ComponentVariant } from '../types';
+import { ComponentVariant, BuyerType } from '../types';
 
 export const ReservationForm: React.FC = () => {
-  const [buyerType, setBuyerType] = useState<'Corporate' | 'Individual'>('Individual');
+  const [buyerType, setBuyerType] = useState<BuyerType>('Individual');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   
@@ -47,121 +46,113 @@ export const ReservationForm: React.FC = () => {
     setTimeout(() => setSubmitStatus('idle'), 5000);
   };
 
-  const inputClasses = "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all duration-300";
-  const labelClasses = "block text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-2";
+  const inputClasses = "w-full bg-white/5 border border-white/5 rounded-xl px-6 py-4 text-white placeholder-zinc-600 focus:outline-none focus:border-white focus:bg-white/10 transition-all duration-300";
+  const labelClasses = "block text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-500 mb-3";
 
   return (
-    <section className="py-24 relative" id="concierge">
-      {/* Ambient Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
-
+    <section className="py-24 relative bg-black/50" id="reservation">
       <div className="max-w-[1920px] mx-auto px-6 md:px-12 relative z-10">
         
-        <div className="text-center mb-16">
-          <span className="text-white text-xs font-bold tracking-[0.3em] uppercase block mb-4">
-            Concierge Services
+        <div className="text-center mb-24">
+          <span className="text-white/40 text-[10px] font-bold tracking-[0.4em] uppercase block mb-6">
+            Elite Access
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
-            Reserve Your Allocation
+          <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 tracking-tighter italic">
+            Secure Your Priority Allocation
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto font-light">
-            Secure priority access to incoming inventory. Reserve luxury cars via pre-order before they arrive at our showroom.
+          <p className="text-zinc-500 max-w-2xl mx-auto text-lg">
+            Whether for your personal collection, corporate fleet, or dealer inventory—our global concierge secures the world's most sought-after vehicles.
           </p>
         </div>
 
-        <GlassCard className="max-w-4xl mx-auto backdrop-blur-2xl !p-8 md:!p-12 relative overflow-hidden">
+        <div className="max-w-5xl mx-auto bg-zinc-950 border border-white/5 rounded-[3rem] p-8 md:p-16 relative overflow-hidden shadow-2xl">
           
           {submitStatus === 'success' && (
-             <div className="absolute inset-0 z-20 bg-black/95 flex items-center justify-center flex-col animate-in fade-in duration-300">
-                <div className="w-20 h-20 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center mb-6">
-                   <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+             <div className="absolute inset-0 z-20 bg-black flex items-center justify-center flex-col animate-in fade-in duration-500">
+                <div className="w-24 h-24 rounded-full bg-white text-black flex items-center justify-center mb-10 shadow-2xl shadow-white/10">
+                   <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                 </div>
-                <h3 className="text-2xl font-serif text-white mb-2">Request Received</h3>
-                <p className="text-slate-400">Our concierge team will contact you shortly.</p>
-                <button onClick={() => setSubmitStatus('idle')} className="mt-6 text-sm text-white uppercase tracking-widest hover:text-white/80 transition-colors">Make another request</button>
+                <h3 className="text-3xl font-bold text-white mb-4">Request Registered</h3>
+                <p className="text-zinc-500 text-lg">Our boutique procurement team will contact you within 4 hours.</p>
+                <button onClick={() => setSubmitStatus('idle')} className="mt-12 text-[10px] font-bold text-white uppercase tracking-[0.4em] border-b border-white/20 hover:border-white transition-all pb-1">Submit New Brief</button>
              </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-12">
             
             {/* Buyer Type Toggle */}
-            <div className="flex flex-col items-center justify-center mb-8">
-              <label className={labelClasses}>I am purchasing as</label>
-              <div className="bg-black/20 p-1 rounded-xl border border-white/5 inline-flex relative">
-                <button
-                  type="button"
-                  onClick={() => setBuyerType('Individual')}
-                  className={`relative z-10 px-8 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    buyerType === 'Individual' ? 'text-black' : 'text-slate-500 hover:text-slate-300'
-                  }`}
-                >
-                  Individual
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBuyerType('Corporate')}
-                  className={`relative z-10 px-8 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    buyerType === 'Corporate' ? 'text-black' : 'text-slate-500 hover:text-slate-300'
-                  }`}
-                >
-                  Corporate
-                </button>
+            <div className="flex flex-col items-center justify-center mb-12">
+              <label className={labelClasses}>Select Profile</label>
+              <div className="bg-white/5 p-1 rounded-full border border-white/10 flex relative overflow-hidden">
+                {(['Individual', 'Corporate', 'Dealer'] as const).map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setBuyerType(type)}
+                    className={`relative z-10 px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-500 ${
+                      buyerType === type ? 'text-black' : 'text-zinc-500 hover:text-zinc-300'
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
                 {/* Active Pill Background */}
                 <div 
-                  className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-lg transition-transform duration-300 ease-out ${
-                    buyerType === 'Corporate' ? 'translate-x-[100%] translate-x-2' : 'translate-x-0'
-                  }`}
+                  className="absolute top-1 bottom-1 w-[calc(33.33%-2px)] bg-white rounded-full shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                  style={{ 
+                    transform: `translateX(${buyerType === 'Individual' ? '0%' : buyerType === 'Corporate' ? '100%' : '200%'})` 
+                  }}
                 />
               </div>
             </div>
 
             {/* Personal Details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div>
-                <label htmlFor="fullName" className={labelClasses}>Full Name</label>
+                <label htmlFor="fullName" className={labelClasses}>Full Identity</label>
                 <input 
                   required
                   type="text" 
                   name="fullName" 
                   id="fullName"
                   className={inputClasses}
-                  placeholder="e.g. Jonathan Sterling"
+                  placeholder="e.g. Aliko Dangote"
                   value={formData.fullName}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="email" className={labelClasses}>Email Address</label>
+                <label htmlFor="email" className={labelClasses}>Direct Communication (Email)</label>
                 <input 
                   required
                   type="email" 
                   name="email" 
                   id="email"
                   className={inputClasses}
-                  placeholder="name@company.com"
+                  placeholder="secure@business.com"
                   value={formData.email}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="phone" className={labelClasses}>Phone Number</label>
+                <label htmlFor="phone" className={labelClasses}>Phone / WhatsApp</label>
                 <input 
                   type="tel" 
                   name="phone" 
                   id="phone"
                   className={inputClasses}
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+234 000 000 0000"
                   value={formData.phone}
                   onChange={handleChange}
                 />
               </div>
               <div>
-                 <label htmlFor="date" className={labelClasses}>Expected Delivery</label>
+                 <label htmlFor="date" className={labelClasses}>Desired Arrival Window</label>
                  <input 
                   type="date" 
                   name="date" 
                   id="date"
-                  className={`${inputClasses} [color-scheme:dark]`} 
+                  className={`${inputClasses} [color-scheme:dark] cursor-pointer`} 
                   value={formData.date}
                   onChange={handleChange}
                 />
@@ -169,11 +160,11 @@ export const ReservationForm: React.FC = () => {
             </div>
 
             {/* Car Details Divider */}
-            <div className="border-t border-white/10 pt-8 mt-8">
-               <h4 className="font-serif text-xl text-white mb-6">Vehicle Preferences</h4>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="pt-12 border-t border-white/5 mt-12">
+               <h4 className="text-[10px] font-bold uppercase tracking-[0.4em] text-white mb-10">Vehicle Specification Brief</h4>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                   <div>
-                    <label htmlFor="brand" className={labelClasses}>Brand Interest</label>
+                    <label htmlFor="brand" className={labelClasses}>Manufacturer</label>
                     <select 
                       name="brand" 
                       id="brand" 
@@ -181,34 +172,35 @@ export const ReservationForm: React.FC = () => {
                       value={formData.brand}
                       onChange={handleChange}
                     >
-                      <option value="" className="bg-black text-slate-400">Select Brand</option>
-                      <option value="Rolls-Royce" className="bg-black text-white">Rolls-Royce</option>
-                      <option value="Bentley" className="bg-black text-white">Bentley</option>
-                      <option value="Porsche" className="bg-black text-white">Porsche</option>
-                      <option value="Aston Martin" className="bg-black text-white">Aston Martin</option>
-                      <option value="Other" className="bg-black text-white">Other</option>
+                      <option value="" className="bg-zinc-900 text-zinc-600">Select Brand</option>
+                      <option value="Mercedes-Benz" className="bg-zinc-900 text-white">Mercedes-Benz</option>
+                      <option value="Land Rover" className="bg-zinc-900 text-white">Land Rover</option>
+                      <option value="Porsche" className="bg-zinc-900 text-white">Porsche</option>
+                      <option value="Lexus" className="bg-zinc-900 text-white">Lexus</option>
+                      <option value="Toyota" className="bg-zinc-900 text-white">Toyota</option>
+                      <option value="Other" className="bg-zinc-900 text-white">Custom Request</option>
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="model" className={labelClasses}>Model (Optional)</label>
+                    <label htmlFor="model" className={labelClasses}>Model Range</label>
                     <input 
                       type="text" 
                       name="model" 
                       id="model"
                       className={inputClasses}
-                      placeholder="e.g. Phantom"
+                      placeholder="e.g. G63 AMG"
                       value={formData.model}
                       onChange={handleChange}
                     />
                   </div>
                   <div>
-                    <label htmlFor="color" className={labelClasses}>Preferred Spec/Color</label>
+                    <label htmlFor="color" className={labelClasses}>Aesthetic / Build Spec</label>
                     <input 
                       type="text" 
                       name="color" 
                       id="color"
                       className={inputClasses}
-                      placeholder="e.g. Midnight Sapphire"
+                      placeholder="e.g. Obsidian Black / Night Pkg"
                       value={formData.color}
                       onChange={handleChange}
                     />
@@ -218,33 +210,33 @@ export const ReservationForm: React.FC = () => {
 
             {/* Notes */}
             <div>
-              <label htmlFor="notes" className={labelClasses}>Additional Requests</label>
+              <label htmlFor="notes" className={labelClasses}>Detailed Requirements / Bulk Notes</label>
               <textarea 
                 name="notes" 
                 id="notes"
                 rows={4}
                 className={inputClasses}
-                placeholder="Specific packages, customization requests, or logistics details..."
+                placeholder="Include bulk quantity, shipping destination, or bespoke tuning requirements..."
                 value={formData.notes}
                 onChange={handleChange}
               />
             </div>
 
             {/* Submit Action */}
-            <div className="flex flex-col items-end pt-4">
+            <div className="pt-8">
               <Button 
                 type="submit"
                 disabled={isSubmitting}
                 variant={ComponentVariant.PRIMARY} 
-                className="w-full md:w-auto !py-4 !px-12 text-lg shadow-xl shadow-white/5 hover:shadow-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full !py-6 !px-12 text-sm !tracking-[0.4em] font-bold uppercase shadow-2xl transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
               >
-                {isSubmitting ? 'Processing...' : 'Submit Reservation Request'}
+                {isSubmitting ? 'TRANSMITTING BRIEF...' : 'INITIATE PROCUREMENT REQUEST'}
               </Button>
-              {submitStatus === 'error' && <p className="text-red-400 text-sm mt-2">Failed to submit request. Please try again.</p>}
+              {submitStatus === 'error' && <p className="text-red-400 text-xs mt-4 text-center">Protocol failure. Please re-attempt submission.</p>}
             </div>
 
           </form>
-        </GlassCard>
+        </div>
       </div>
     </section>
   );

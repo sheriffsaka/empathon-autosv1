@@ -4,42 +4,70 @@ import { FilterBar } from './FilterBar';
 import { BuyerType, Car } from '../types';
 import { MOCK_CARS } from '../constants';
 
-export const CarGrid: React.FC = () => {
-  const [buyerType, setBuyerType] = useState<BuyerType>('Corporate');
+interface CarGridProps {
+  limit?: number;
+  showFilters?: boolean;
+  forcedBuyerType?: BuyerType;
+  title?: string;
+  description?: string;
+}
+
+export const CarGrid: React.FC<CarGridProps> = ({ 
+  limit, 
+  showFilters = true, 
+  forcedBuyerType,
+  title = "Current Inventory",
+  description = "Explore our curated selection of vehicles available for immediate acquisition or future allocation."
+}) => {
+  const [buyerType, setBuyerType] = useState<BuyerType>(forcedBuyerType || 'Individual'); 
   const [showPreOrder, setShowPreOrder] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedSector, setSelectedSector] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [maxPrice, setMaxPrice] = useState(100000000); // Default 100M
+  const [maxPrice, setMaxPrice] = useState(100000000); 
   const [cars] = useState<Car[]>(MOCK_CARS);
   const [isLoading] = useState(false);
   const [useMockData] = useState(true);
 
   // Filter Logic
   const filteredCars = useMemo(() => {
-    return cars.filter(car => {
+    let result = cars.filter(car => {
       // 1. Filter by Buyer Type
-      const matchesBuyerType = car.buyerType.includes(buyerType);
+      const currentBuyerType = forcedBuyerType || buyerType;
+      const matchesBuyerType = car.buyerType.includes(currentBuyerType);
       
-      // 2. Filter by Pre-Order Checkbox (Specific Override)
+      // 2. Filter by Pre-Order Checkbox
       const matchesPreOrderCheckbox = showPreOrder ? car.status === 'Pre-Order' : true;
 
       // 3. Filter by Brand
       const matchesBrand = selectedBrand ? car.brand === selectedBrand : true;
 
-      // 4. Filter by Status Dropdown
+      // 4. Filter by Sector
+      const matchesSector = selectedSector ? car.sector === selectedSector : true;
+
+      // 5. Filter by Status Dropdown
       const matchesStatus = selectedStatus ? car.status === selectedStatus : true;
 
-      // 5. Filter by Price
+      // 6. Filter by Price
       const matchesPrice = car.price <= maxPrice;
 
-      return matchesBuyerType && matchesPreOrderCheckbox && matchesBrand && matchesStatus && matchesPrice;
+      return matchesBuyerType && matchesPreOrderCheckbox && matchesBrand && matchesSector && matchesStatus && matchesPrice;
     });
-  }, [buyerType, showPreOrder, selectedBrand, selectedStatus, maxPrice, cars]);
+
+    // Sort by Brand alphabetically
+    result.sort((a, b) => a.brand.localeCompare(b.brand));
+
+    if (limit) {
+      return result.slice(0, limit);
+    }
+    return result;
+  }, [buyerType, forcedBuyerType, showPreOrder, selectedBrand, selectedStatus, maxPrice, cars, limit]);
 
   const clearFilters = () => {
     setShowPreOrder(false);
-    setBuyerType('Corporate');
+    if (!forcedBuyerType) setBuyerType('Individual');
     setSelectedBrand('');
+    setSelectedSector('');
     setSelectedStatus('');
     setMaxPrice(100000000);
   };
@@ -47,10 +75,10 @@ export const CarGrid: React.FC = () => {
   return (
     <section className="relative z-20 pb-24" id="showroom">
       
-      <div className="max-w-[1920px] mx-auto px-6 md:px-12 mb-12 pt-24">
-        <h2 className="font-serif text-4xl md:text-5xl text-white mb-4">Current Inventory</h2>
-        <p className="text-slate-400 max-w-2xl font-light text-lg">
-          Explore our curated selection of vehicles available for immediate acquisition or future allocation.
+      <div className="max-w-[1920px] mx-auto px-6 md:px-12 mb-12">
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">{title}</h2>
+        <p className="text-zinc-500 max-w-2xl text-lg">
+          {description}
         </p>
         {useMockData && (
           <div className="mt-4 p-3 bg-empathon-rust/10 border border-empathon-rust/30 rounded-lg inline-block">
@@ -62,18 +90,23 @@ export const CarGrid: React.FC = () => {
         )}
       </div>
 
-      <FilterBar 
-        buyerType={buyerType} 
-        setBuyerType={setBuyerType}
-        showPreOrder={showPreOrder}
-        setShowPreOrder={setShowPreOrder}
-        selectedBrand={selectedBrand}
-        setSelectedBrand={setSelectedBrand}
-        selectedStatus={selectedStatus}
-        setSelectedStatus={setSelectedStatus}
-        maxPrice={maxPrice}
-        setMaxPrice={setMaxPrice}
-      />
+      {showFilters && (
+        <FilterBar 
+          buyerType={buyerType} 
+          setBuyerType={setBuyerType}
+          showPreOrder={showPreOrder}
+          setShowPreOrder={setShowPreOrder}
+          selectedBrand={selectedBrand}
+          setSelectedBrand={setSelectedBrand}
+          selectedSector={selectedSector}
+          setSelectedSector={setSelectedSector}
+          selectedStatus={selectedStatus}
+          setSelectedStatus={setSelectedStatus}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          hideBuyerToggle={!!forcedBuyerType}
+        />
+      )}
 
       <div className="max-w-[1920px] mx-auto px-6 md:px-12">
         {isLoading ? (

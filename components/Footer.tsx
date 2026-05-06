@@ -1,62 +1,51 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <footer className="bg-black/40 border-t border-white/10 pt-16 pb-8">
+    <footer className="bg-black border-t border-white/5 pt-24 pb-12">
       <div className="max-w-[1920px] mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
           <div className="col-span-1 md:col-span-2">
-             <div className="mb-6">
-               <Logo />
+             <div className="mb-8">
+               <Logo imgClassName="h-12 md:h-20" />
              </div>
             
-            <p className="text-slate-400 font-light max-w-md">
-              Redefining the acquisition of luxury mobility. Corporate fleets and private collections managed with unparalleled precision.
+            <p className="text-zinc-500 font-light max-w-sm text-lg leading-relaxed">
+              Nigeria's premier automobile brokerage. Redefining how individuals, corporations, and dealers source quality mobility.
             </p>
           </div>
           
           <div>
-            <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Services</h4>
-            <ul className="space-y-4 text-sm text-slate-400">
-              <li><a href="#corporate" className="hover:text-empathon-rust transition-colors">Corporate Fleet</a></li>
-              <li><a href="#private" className="hover:text-empathon-rust transition-colors">Private Brokerage</a></li>
-              <li><a href="#corporate" className="hover:text-empathon-rust transition-colors">Import/Export</a></li>
-              <li><a href="#concierge" className="hover:text-empathon-rust transition-colors">Maintenance Concierge</a></li>
+            <h4 className="text-white font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Solutions</h4>
+            <ul className="space-y-4 text-sm text-zinc-500">
+              <li><Link to="/showroom" className="hover:text-white transition-colors">Individual Showroom</Link></li>
+              <li><Link to="/corporate" className="hover:text-white transition-colors">Fleet Solutions</Link></li>
+              <li><Link to="/dealers" className="hover:text-white transition-colors">Dealer Inventory</Link></li>
+              <li><Link to="/tracking" className="hover:text-white transition-colors">Order Tracking</Link></li>
             </ul>
           </div>
 
           <div>
-             <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">Connect</h4>
-             <ul className="space-y-4 text-sm text-slate-400">
-              <li><a href="#contact" className="hover:text-empathon-rust transition-colors">Contact Support</a></li>
-              <li><a href="#contact" className="hover:text-empathon-rust transition-colors">Showroom Locations</a></li>
-              <li><a href="#concierge" className="hover:text-empathon-rust transition-colors">Client Portal</a></li>
-              <li><a href="#admin" className="text-empathon-rust hover:text-white transition-colors font-medium">Admin Portal</a></li>
+             <h4 className="text-white font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Navigation</h4>
+             <ul className="space-y-4 text-sm text-zinc-500">
+              <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/showroom" className="hover:text-white transition-colors">Browse Stock</Link></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Contact Us</a></li>
+              <li><Link to="/admin" className="text-zinc-300 hover:text-white transition-colors font-medium">Internal Portal</Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
-            <p className="text-xs text-slate-600">© 2024 Empathon-Autos. All rights reserved.</p>
-            <a 
-              href="https://cloudcraves.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-xs text-slate-600 hover:text-empathon-rust transition-colors"
-            >
-              Site By: CloudCraves
-            </a>
+        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-12">
+            <p className="text-[10px] uppercase tracking-widest text-zinc-600">© 2024 Empathon-Autos. Luxury Sourcing Reinvented.</p>
           </div>
-          <div className="flex gap-6 text-xs text-slate-600">
-            <a href="#" className="hover:text-slate-400">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-400">Terms of Service</a>
+          <div className="flex gap-8 text-[10px] uppercase tracking-widest text-zinc-600">
+            <a href="#" className="hover:text-zinc-400 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-zinc-400 transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>

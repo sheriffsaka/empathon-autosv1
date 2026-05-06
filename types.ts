@@ -34,7 +34,7 @@ export interface NavItem {
 }
 
 export type CarStatus = 'Available' | 'Reserved' | 'Pre-Order';
-export type BuyerType = 'Corporate' | 'Individual';
+export type BuyerType = 'Corporate' | 'Individual' | 'Dealer';
 
 export interface Car {
   id: string;
@@ -48,4 +48,5 @@ export interface Car {
   status: CarStatus;
   buyerType: BuyerType[];
   image: string;
+  sector?: string; // e.g. Banking, Real Estate, Government
 }

@@ -13,6 +13,7 @@ export const MOCK_CARS = [
     condition: 'Foreign Used',
     buyerType: ['Corporate', 'Individual'],
     image: 'https://res.cloudinary.com/di7okmjsx/image/upload/v1770925122/GLE_350_4MATIC_eghehz.jpg',
+    sector: 'Banking & Finance',
     created_at: new Date().toISOString()
   },
   {
@@ -43,6 +44,7 @@ export const MOCK_CARS = [
     condition: 'Foreign Used',
     buyerType: ['Individual', 'Corporate'],
     image: 'https://res.cloudinary.com/di7okmjsx/image/upload/v1770925122/ML_350_h6kps1.jpg',
+    sector: 'Government',
     created_at: new Date().toISOString()
   },
   {
@@ -58,6 +60,7 @@ export const MOCK_CARS = [
     condition: 'Foreign Used',
     buyerType: ['Individual', 'Corporate'],
     image: 'https://res.cloudinary.com/di7okmjsx/image/upload/v1770925121/Corolla_LE_nancev.jpg',
+    sector: 'Professional SMEs',
     created_at: new Date().toISOString()
   },
   {
@@ -271,6 +274,14 @@ export const MOCK_BRANDS = [
   'Honda',
   'BMW',
   'Range Rover'
+];
+
+export const MOCK_SECTORS = [
+  'Banking & Finance',
+  'Professional SMEs',
+  'Real Estate',
+  'Government',
+  'Oil & Gas'
 ];
 
 export const MOCK_SITE_SETTINGS = {
